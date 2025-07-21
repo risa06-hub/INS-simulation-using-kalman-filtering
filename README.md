@@ -25,13 +25,15 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
 - Visualizes the **true path vs estimated path**
 
 ---
+### THEORY
 
-### Basic Kalman Filter Explanation for INS
+#### Basic Kalman Filter Explanation for INS
 
 A Kalman Filter is used to estimate the state of a system (like position, velocity, orientation) even when the sensor measurements are noisy.
 
 **Kalman Filter Steps**
 1. Define the state vector which will store the information about the state of the object like position and velocity
+   
    for example:
      x=[ x
          y
@@ -39,9 +41,81 @@ A Kalman Filter is used to estimate the state of a system (like position, veloci
          vy
            ]
    
+2. **prediction step**
+   we use physics to predict the next state:
+   
+   ``` xk∣k−1​=A⋅xk−1∣k−1​+B⋅uk```
+   where
+   A: state transition matrix
+   B: control matrix
+   uk: acceleration input from accelerometer
+   
+3.**update step**
+  use the measurement from the GPS to correct the predicted values
+  
+  ```xk∣k​=xk∣k−1​+K⋅(zk​−H⋅xk∣k−1​)```
+  where 
+  zk: measurement
+  H: measurement matrix
+  K: kalman gain
+4.**update error covaiance matrix**
 
-    
-    ---
+#### P matrix
+P is the state covariance matrix.
+
+  It encodes your uncertainty about the system’s state vector x.
+  
+  It’s always a square matrix with dimensions equal to the number of state variables.
+
+  P= [ Var(x)Cov(y,x)Cov(vx,x)Cov(vy,x)​Cov(x,y)Var(y)Cov(vx,y)Cov(vy,y)​Cov(x,vx)Cov(y,vx)Var(vx)Cov(vy,vx)​Cov(x,vy)Cov(y,vy)Cov(vx,vy)Var(vy)​]
+  
+Each element tells the filter how uncertain it is about relationships between different parts of the state.
+
+In Kalman filtering prediction:
+```P= A @ P @ A.T```
+``` Pk∣k−1​=A⋅Pk−1∣k−1​⋅A⊤+Q```
+#### How does the state transition matrix formed
+If:
+
+  The object moves with constant velocity, and
+
+   Time step is ΔtΔt,
+
+Then:
+xk+1 = xk + vx⋅Δt
+yk+1= yk + vy⋅Δt 
+vxk+1 = vxk 
+vyk+1 = vyk
+
+​​​**covert to matrix**
+
+xk+1 ​ = F⋅xk​
+F=[1 0 Δt 0 
+   0 1 0 Δt 
+   0 0 1 0 
+   0 0 0 1 ]​
+
+#### Kalman Gain
+The Kalman gain tells is a weighting factor that determines how much to trust the measurement vs the current prediction.
+
+Kalman Gain Formula:
+```K = P @ H.T @ S-1```
+where S=(H @ P @H.T + R) it indicated the total uncertanity in the predicted measurement
+ ```H @ P @ H.T``` – Transforms state uncertainty into measurement space
+
+If S is large → we don’t trust the measurement much → small correction
+
+If S is small → we trust the measurement more → bigger correction
+**what is S?**
+S is the innovation covariance matrix.It quantifies the total uncertainty in the measurement residual and is used to compute Kalman gain(K)
+
+Kalman Update Equation:
+
+The Kalman gain is used in the update step like this:
+
+```x_updated = x_predicted + K⋅(z − H @ x_predicted)```
+
+---
 
 ### 🔧 How It Works
  1.**simulate Circular Motion**
@@ -89,4 +163,4 @@ pip install numpy matplotlib
 
 ```bash
 python circular_motion_kalman.py
-
+```

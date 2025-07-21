@@ -209,7 +209,7 @@ python circular_motion_kalman.py
 
 ## Author
 
-[Risa Mahajan](https://github.com/your-risa06-hub)
+[Risa Mahajan](https://github.com/risa06-hub)
 
 
 

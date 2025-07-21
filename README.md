@@ -41,8 +41,8 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
      -Add noise to the GPS measurements of position and velocity
      
  3.**Kalman FIlter Setup**
-     -state vector:     x= '[x,y,vx,vy]'
-     -covariance matrix: P, initialised the variance very high,ie 500, because the uncertanity in the position                              of the object is high
+  -state vector:     x= [x,y,vx,vy] 
+  -covariance matrix: P, initialised the variance very high,ie 500, because the uncertanity in the position of the object is high
      -matrices:
        -`A` = state transition
        -`B` = control input (acceleration)
@@ -52,7 +52,9 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
        
   4.**Kalman Filter Loop**
       -prediction step using dynamica and measured acceleration
+      
       -update the state vector and covariance matrix using the noise by determining the kalman gain.
+      
       -store the estimated state at each time step
     
   5.**Plot the Results**

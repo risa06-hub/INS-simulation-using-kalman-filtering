@@ -32,7 +32,8 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
 A Kalman Filter is used to estimate the state of a system (like position, velocity, orientation) even when the sensor measurements are noisy.
 
 **Kalman Filter Steps**
-1. Define the state vector which will store the information about the state of the object like position and velocity
+ 
+-Define the state vector which will store the information about the state of the object like position and velocity
    
    for example:
      x=[ x
@@ -41,39 +42,39 @@ A Kalman Filter is used to estimate the state of a system (like position, veloci
          vy
            ]
    
-2. **prediction step**
+-**prediction step**
    we use physics to predict the next state:
    
    ``` xk∣k−1​=A⋅xk−1∣k−1​+B⋅uk```
-   where
-   A: state transition matrix
-   B: control matrix
-   uk: acceleration input from accelerometer
    
-3.**update step**
+   where
+   -A: state transition matrix
+   -B: control matrix
+   -uk: acceleration input from accelerometer
+   
+-**update step**
   use the measurement from the GPS to correct the predicted values
   
   ```xk∣k​=xk∣k−1​+K⋅(zk​−H⋅xk∣k−1​)```
   where 
-  zk: measurement
-  H: measurement matrix
-  K: kalman gain
-4.**update error covaiance matrix**
+  -zk: measurement
+  -H: measurement matrix
+  -K: kalman gain
+
+-**update error covaiance matrix**
 
 #### P matrix
 P is the state covariance matrix.
+-It encodes your uncertainty about the system’s state vector x.
+-It’s always a square matrix with dimensions equal to the number of state variables.
 
-  It encodes your uncertainty about the system’s state vector x.
-  
-  It’s always a square matrix with dimensions equal to the number of state variables.
-
-  P= [ Var(x)Cov(y,x)Cov(vx,x)Cov(vy,x)​Cov(x,y)Var(y)Cov(vx,y)Cov(vy,y)​Cov(x,vx)Cov(y,vx)Var(vx)Cov(vy,vx)​Cov(x,vy)Cov(y,vy)Cov(vx,vy)Var(vy)​]
-  
-Each element tells the filter how uncertain it is about relationships between different parts of the state.
+ -``` P= [ [Var(x) Cov(y,x) Cov(vx,x) Cov(vy,x)] , [​Cov(x,y) Var(y) Cov(vx,y) Cov(vy,y)] , [​Cov(x,vx) Cov(y,vx) Var(vx) Cov(vy,vx)​] ,[Cov(x,vy) Cov(y,vy) Cov(vx,vy) Var(vy)] ​]```
+ -Each element tells the filter how uncertain it is about relationships between different parts of the state.
 
 In Kalman filtering prediction:
-```P= A @ P @ A.T```
-``` Pk∣k−1​=A⋅Pk−1∣k−1​⋅A⊤+Q```
+-```P= A @ P @ A.T```
+-``` Pk∣k−1​=A⋅Pk−1∣k−1​⋅A⊤+Q```
+
 #### How does the state transition matrix formed
 If:
 

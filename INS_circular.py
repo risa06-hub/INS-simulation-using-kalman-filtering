@@ -43,7 +43,7 @@ A=np.array([[1,0,dt,0],      #state transition matirx for x,y,vx,vy
             [0,0,1,0],
             [0,0,0,1]])
 
-B=np.array([[0.5*dt*dt,0],    #state transition matrix for ax,ay
+B=np.array([[0.5*dt*dt,0],    #control matrix for acceleration
             [0,0.5*dt*dt],
             [dt,0],
             [0,dt]])
@@ -54,7 +54,7 @@ Q=np.eye(4)*0.01 #process noise
 R=np.eye(4)*4
 
 #GPS noise simulation
-measured_pos=np.stack([true_x,true_y],axis=1) + 2*np.random.rand(N,2) #position measured with random                  noise with std=2
+measured_pos=np.stack([true_x,true_y],axis=1) + 2*np.random.rand(N,2) #position measured with random noise with std=2
 measured_vel=np.stack([true_vx,true_vy],axis=1) + 1*np.random.rand(N,2)
 measurements=np.hstack((measured_pos,measured_vel))
 est_theta=np.zeros(N)
@@ -63,17 +63,17 @@ est_theta=np.zeros(N)
 x_est=[]
 for i in range(N):
     u=acc_body[i] #measured quantity from the accelerometer
-    x= A@x + B@u.reshape(2,1)
-    P= A@P@A.T +  Q
+    x= A @ x + B @ u.reshape(2,1)
+    P= A @ P @ A.T +  Q
 
     #updating the measurement
     z= measurements[i].reshape(4,1)
-    y= z - H@x
-    S= H@P@A.T + R #total uncertanity
-    K= P@H.T@np.linalg.inv(S) #kalman gain, where np.linalg.inv(S) creates inverse of S matrix
+    y= z - H @ x
+    S= H @ P @ A.T + R #total uncertanity
+    K= P @ H.T @ np.linalg.inv(S) #kalman gain, where np.linalg.inv(S) creates inverse of S matrix
 
-    x= x + K@y #updated position values
-    P= (np.eye(4)-K@H)@P
+    x= x + K @ y #updated position values
+    P= (np.eye(4)-K @ H) @ P
     x_est.append(x.flatten())
 
     #estimatio of theta

@@ -75,7 +75,10 @@ P is the state covariance matrix.
 
 -It’s always a square matrix with dimensions equal to the number of state variables.
 
- -``` P= [ [Var(x) Cov(y,x) Cov(vx,x) Cov(vy,x)] , [​Cov(x,y) Var(y) Cov(vx,y) Cov(vy,y)] , [​Cov(x,vx) Cov(y,vx) Var(vx) Cov(vy,vx)​] ,[Cov(x,vy) Cov(y,vy) Cov(vx,vy) Var(vy)] ​]```
+ -``` P= [  [Var(x) Cov(y,x) Cov(vx,x) Cov(vy,x)] ,
+            [​Cov(x,y) Var(y) Cov(vx,y) Cov(vy,y)] , 
+            [​Cov(x,vx) Cov(y,vx) Var(vx) Cov(vy,vx)​],
+            [Cov(x,vy) Cov(y,vy) Cov(vx,vy) Var(vy)] ​]```
  
  -Each element tells the filter how uncertain it is about relationships between different parts of the state.
 
@@ -104,6 +107,7 @@ vyk+1 = vyk
 ​​​**covert to matrix**
 
 xk+1 ​ = F⋅xk​
+
 F=[1 0 Δt 0 
 
    0 1 0 Δt 
@@ -121,8 +125,11 @@ Kalman Gain Formula:
 ```K = P @ H.T @ S-1```
 
 where S=(H @ P @H.T + R) 
+
 it indicated the total uncertanity in the predicted measurement
+
  ```H @ P @ H.T``` 
+ 
  – Transforms state uncertainty into measurement space
 
 If S is large → we don’t trust the measurement much → small correction

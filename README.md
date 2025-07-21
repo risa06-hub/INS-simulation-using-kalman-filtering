@@ -26,9 +26,22 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
 
 ---
 
-###THEORY
+### Basic Kalman Filter Explanation for INS
 
----
+A Kalman Filter is used to estimate the state of a system (like position, velocity, orientation) even when the sensor measurements are noisy.
+
+**Kalman Filter Steps**
+1. Define the state vector which will store the information about the state of the object like position and velocity
+   for example:
+     x=[ x
+         y
+         vx
+         vy
+           ]
+   
+
+    
+    ---
 
 ### 🔧 How It Works
  1.**simulate Circular Motion**

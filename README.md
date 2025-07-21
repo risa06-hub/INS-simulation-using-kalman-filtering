@@ -26,7 +26,7 @@ Both simulations estimate the full state (position and velocity) using **Kalman 
 
 ---
 ### THEORY
-
+---
 #### Basic Kalman Filter Explanation for INS
 
 A Kalman Filter is used to estimate the state of a system (like position, velocity, orientation) even when the sensor measurements are noisy.
@@ -68,6 +68,8 @@ A Kalman Filter is used to estimate the state of a system (like position, veloci
 
 -**update error covaiance matrix**
 
+--- 
+
 #### P matrix
 P is the state covariance matrix.
 
@@ -88,6 +90,8 @@ In Kalman filtering prediction:
 
 -``` Pk∣k−1​=A⋅Pk−1∣k−1​⋅A⊤+Q```
 
+---
+
 #### How does the state transition matrix formed
 If:
 
@@ -96,25 +100,28 @@ If:
    Time step is ΔtΔt,
 
 Then:
-xk+1 = xk + vx⋅Δt
 
-yk+1= yk + vy⋅Δt 
-
-vxk+1 = vxk 
-
-vyk+1 = vyk
+      xk+1 = xk + vx⋅Δt
+      
+      yk+1= yk + vy⋅Δt 
+      
+      vxk+1 = vxk 
+      
+      vyk+1 = vyk
 
 ​​​**covert to matrix**
 
-xk+1 ​ = F⋅xk​
+    xk+1 ​ = F⋅xk​
 
-F=[1 0 Δt 0 
+    F=[1 0 Δt 0 
+    
+       0 1 0 Δt 
+       
+       0 0 1 0 
+       
+       0 0 0 1 ]​
 
-   0 1 0 Δt 
-   
-   0 0 1 0 
-   
-   0 0 0 1 ]​
+---
 
 #### Kalman Gain
 

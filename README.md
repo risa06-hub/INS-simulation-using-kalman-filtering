@@ -203,7 +203,33 @@ pip install numpy matplotlib
 python circular_motion_kalman.py
 ```
 
+## 📌 2. satellite Motion Simulation
 
+### Description
+
+### Theory
+  To stimulate the motion of the satellite, i used the Runge-Kutta 4th order(RK4) integrator. This method is   used in orbital mechanics because its accurate and stable for integrating ordinary differential equations.
+  **RK4 Method**
+
+   RK4 approximates the next state by calculating four intermediate "slopes" and taking a weighted average
+
+   we are integrating this system:
+
+      dr/dt= v
+      dv/dt= a(r)
+
+  where acceleration due to the gravity:
+
+      a(r)= -GM*(r/r^3)
+      
+  RK4 is designed to solve differential equations of the form:
+
+      dy/dt = f(y,t)
+  by estimating the new value y(n+1) as:
+
+      y(n+1) = yn +dt/6(k_1 + 2*k_2 + 2*k_3 + k_4)
+
+  
 
 
 
